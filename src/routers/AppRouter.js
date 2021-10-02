@@ -23,7 +23,7 @@ export const AppRouter = () => {
                     component={AuthRouter}
                     isAuthenticated={user.logged}
                 />
-                <PrivateRoute   
+                <PublicRoute   
                     path="/"
                     component={DashboardRoutes}
                     isAuthenticated={user.logged}

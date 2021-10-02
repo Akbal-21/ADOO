@@ -1,9 +1,10 @@
 import React from 'react'
+import { ProyAppBar } from './ProyAppBar'
 
 export const CreateProyect = () => {
     return (
-        <div>
-            <h2>Create</h2>
+        <div className="proyect__main-content">
+            <ProyAppBar/>
         </div>
     )
 }

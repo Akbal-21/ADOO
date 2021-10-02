@@ -1,0 +1,15 @@
+
+.proyect__main-content{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.proy__appbar{
+    align-items:center;
+    background-color: lighten($color: $pryme, $amount: 5%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 10px 20px;
+}

@@ -29,7 +29,7 @@ export const LoginScreen = ({history}) => {
             <form >
                 <input 
                     type="text"
-                    placeholder="email address"
+                    placeholder="Email address"
                     name="email"
                     className="auth__input"
                     autoComplete="off"
@@ -59,7 +59,9 @@ export const LoginScreen = ({history}) => {
                         </p>
                     </div>
                 </div>
-                <Link to="/auth/register">
+                <Link
+                 to="/auth/register" 
+                 className="link">
                     Registrer
                 </Link>
             </form>
