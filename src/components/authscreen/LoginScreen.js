@@ -1,38 +1,73 @@
-import React,{useContext} from 'react'
-import { AuthContext } from '../../auth/AuthContext'
-import { types } from '../../types/types'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import { useForm } from '../../hooks/useForm'
+import { useDispatch, useSelector } from 'react-redux'
+import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth'
+import validator from 'validator'
+import { removeError, setError } from '../../actions/ui'
 
-export const LoginScreen = ({history}) => {
+export const LoginScreen = () => {
 
-    const {dispatch} = useContext(AuthContext);
+    const {loading} = useSelector(state => state.ui)
 
-    const handleLogin =() =>{
+    const {msgError} = useSelector(state => state.ui);
 
-        const lastPath = localStorage.getItem('lastPath'|| '/');
+    const dispatch = useDispatch();
 
-        //history.push('/');
-        //history.replace('/');
-        dispatch({
-            type: types.login,
-            payload: {
-                name: 'Fernando'
-            }
-        });
-        history.replace(lastPath);
+    const [formValues, handleInputChange] = useForm ({
+        email: 'akbal153@hotmail.com',
+        password: '123456'
+    })
 
+    const isFormValid = () => {
+        if ( !validator.isEmail( email )) {
+            dispatch(setError('email is not valid.'))
+            return false;
+        } else if (password.length<5) {
+            dispatch(setError('Password should be at least 6 charactersand.'))
+            return false;
+        }
+
+        dispatch(removeError())
+        return true;
     }
+
+    const hadleLogin = (e) => {
+        e.preventDefault();
+        if (isFormValid()) {
+            dispatch(startLoginEmailPassword(email, password))
+        }
+    }
+
+    const handleGoogleLogin = ()=>{
+        dispatch(startGoogleLogin());
+    }
+
+    const {email, password} = formValues;
 
     return (
         <>
+
             <h3 className="auth__title">Login</h3>
-            <form >
+
+            {
+                msgError &&
+                (
+                    <div className="auth__alert-error">
+                        {msgError}
+                    </div>
+                )
+            }
+            
+            <form  onSubmit={hadleLogin}>
                 <input 
                     type="text"
                     placeholder="Email address"
                     name="email"
                     className="auth__input"
                     autoComplete="off"
+                    value={email}
+                    onChange={handleInputChange}
                 />
 
                 <input 
@@ -40,15 +75,21 @@ export const LoginScreen = ({history}) => {
                     placeholder="Password"
                     name="password"
                     className="auth__input"
+                    value={password}
+                    onChange={handleInputChange}
                 />
                 <button
                     type="submit"
                     className="btn btn-prime btn-block"
+                    disabled={loading}
                 >
                     Login
                 </button>
                 
-                <div className="auth__social-networks">
+                <div 
+                    className="auth__social-networks"
+                    onClick={handleGoogleLogin}
+                >
                     <p>social networks</p>
                     <div className="google-btn">
                         <div className="google-icon-wrapper">

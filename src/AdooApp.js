@@ -1,22 +1,13 @@
-import React,{useEffect, useReducer}  from 'react'
-import { AuthContext } from './auth/AuthContext'
-import { authReducer } from './auth/authReducer'
+import React from 'react'
 import { AppRouter } from './routers/AppRouter'
-
-const init = () =>{
-    return JSON.parse(localStorage.getItem('user')) || {logged:false};
-}
+import { Provider } from 'react-redux'
+import { store } from './store/store'
 
 export const AdooApp = () => {
 
-    const [user, dispatch] = useReducer(authReducer, {}, init);
-    useEffect(() => {
-        localStorage.setItem('user',JSON.stringify(user))
-    }, [user])
-
     return (
-        <AuthContext.Provider value={{user, dispatch}}>
+        <Provider store={store}>
             <AppRouter/>
-        </AuthContext.Provider>
+        </Provider>
     )
 }
