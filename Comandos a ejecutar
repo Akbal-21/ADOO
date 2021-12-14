@@ -1,0 +1,13 @@
+Forma de ejecutar cada carpeta con la terminal de git o la de bash en caso de linux o MAC:
+
+    Carpeta adoo1 ejecutar:
+
+        npm install
+        npm rebuild
+        npm start
+
+    Carpeta Express ejecutar:
+
+        npm install
+        npm rebuild
+        npm run dev
